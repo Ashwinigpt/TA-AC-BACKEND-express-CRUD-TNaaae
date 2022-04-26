@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-
-const studentsRouter = require('./views/routes/students')
+const studentsRouter = require('./routes/students');
 
 // connect to mongodb
 
@@ -25,14 +24,16 @@ app.use(express.json);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + "/views"));
 
+app.use(express.urlencoded({ extended: false}));
+
 // routing middlewares
 
-app.use('/', studentsRouter);
+app.use('/students', studentsRouter);
 
 // errorhandling middlewares
 
 app.use((req, res, next) => {
-    res.send("Page not found");
+    res.status(404).send("Page not found");
 })
 
 // server
