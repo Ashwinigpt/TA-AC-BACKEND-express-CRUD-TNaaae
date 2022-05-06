@@ -17,5 +17,19 @@
         </a>
       </nav>
     </header>
+
+    <div class="flex">
+      <% user.forEach((e)=>{ %>
+      <div class="user">
+        <h1>Name: <%= e.name %></h1>
+        <strong>Age: <%= e.age %></strong>
+        <p>Email: <%= e.email %></p>
+        <p>Bio: <%= e.bio %></p>
+        <a href="/user/<%= e._id %>">
+          <button>Read More:</button>
+        </a>
+      </div>
+      <% }) %>
+    </div>
   </body>
 </html>

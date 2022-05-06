@@ -1,24 +1,52 @@
 var express = require('express');
+var app = express();
 var mongoose = require('mongoose');
 var path = require('path');
+var userRouter = require('./routes/user');
+var User = require('./models/User');
 
-// connect to database
-mongoose.connect("mongodb://localhost/user-diary-2",
-    {useNewUrlParser: true, useUnifiedTopology: true},
-    (err) => {
-        console.log("Connected to database");
-    }
-);
+// Setting-up  the database
 
-var app = express();
+mongoose.connect('mongodb://localhost/users', (err) => {
+  console.log(err ? err : 'connected to database');
+});
 
-// middlewares
+// Setting up the ejs engine
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname + 'public')));
+// Setting up the css file
 
-// server
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Middlewares
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//Routes
+
+app.get('/', (req, res) => {
+  res.render('index.ejs');
+});
+
+app.use('/user', userRouter);
+
+// Custom Middlewares
+// 404 custom middleware
+app.use((req, res, next) => {
+  res.send('404: Page not fount');
+});
+
+// Error custom middleware
+
+app.use((err, req, res, next) => {
+  res.send(err);
+});
+
+// Server listening
+
 app.listen(3000, () => {
-    console.log('Server is listening on port 3k');
-})
+  console.log('Server is listening on pork 3k');
+});

@@ -17,5 +17,20 @@
         </a>
       </nav>
     </header>
+
+    <div class="flex">
+      <div class="user">
+        <h1>Name: <%= user.name %></h1>
+        <strong>Age: <%= user.age %></strong>
+        <p>Email: <%= user.email %></p>
+        <p>Bio: <%= user.bio %></p>
+        <a href="/user/<%= user._id %>/edit">
+          <button>Edit</button>
+        </a>
+        <a href="/user/<%= user._id %>/delete">
+          <button>Delete</button>
+        </a>
+      </div>
+    </div>
   </body>
 </html>
